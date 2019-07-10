@@ -1,0 +1,31 @@
+page-chat-list {
+    ion-content {
+        background: #E8EAF2!important;
+        ion-list {
+            h4 {
+                font-size: 1.6rem!important;
+            }
+            ion-item {
+               background: none!important;
+               img {
+                width: 60px!important;
+                height: 60px!important;
+               } 
+               h2 {
+                   color:#000!important;
+                   font-weight: bold!important;
+               }
+            }
+        }
+        .commingsoon {
+            height: 100%;
+            justify-content: center;
+            p {
+                font-size: 2.2rem;
+                text-transform: uppercase;
+                color: #999;
+                text-align: center;
+            }
+        }
+    }
+}

@@ -1,0 +1,63 @@
+page-calender {
+    ion-header {
+        &:after {
+            display: none;
+        }
+    }
+    ion-content {
+    .calender_sec {
+        background: #2D489C;
+        padding-bottom:0px!important;
+        //margin-top:-30px!important;
+        padding:0px!important;
+        ion-row {
+            ion-list {
+                margin-bottom: 0px!important;
+            }
+            ion-item {
+                border-radius:2px!important;
+                .datetime-md {
+                    padding:0px!important;
+                }
+            }
+        }
+        label {
+            color: #fff!important;
+            margin-left: 16px;
+        }
+    }
+    .txt_para {
+        padding-top:120px!important;
+        p {
+            text-align: center!important;
+            color: #999!important;
+        }
+    }
+   
+        ion-grid {
+            padding:8px!important;
+            ion-row {
+                ion-col {
+                    padding: 2px!important;
+                    p {
+                        font-size:1.3rem!important;
+                        margin: 0;
+                        strong {
+                            font-size:1.2rem!important;
+                        }
+                    }
+                    .col_border {
+                        border: 1px solid #999 !important;
+                        width: 100%;
+                        height: 30px;
+                   
+                    }
+                    .col_bg {
+                        background:map-get($colors, toggle)!important;
+                    } 
+                   
+                }
+            }
+        }
+    }
+}

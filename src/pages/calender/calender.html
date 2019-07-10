@@ -1,0 +1,251 @@
+<ion-header>
+    <ion-navbar color="primary">
+      <ion-title text-center>Time Table</ion-title>
+      <ion-buttons right>
+        <button ion-button clear color="light" text-capitalize (click)="freeTime()">Save</button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content>
+  
+    <!-- <ion-label>Select Date</ion-label> -->
+    <div padding class="calender_sec">
+      <label>Select Date</label>
+      <ion-row>
+        <ion-col col-6>
+          <ion-list>
+            <ion-item>
+              <!-- <ion-label>From</ion-label> -->
+              <ion-datetime displayFormat="DD/MM/YY" pickerFormat="DD-MMM-YYYY" placeholder="From"
+                [(ngModel)]="fromDate" min="{{minValidationDate}}" max="{{toDate}}" (ngModelChange)="todateValue($event)"></ion-datetime>
+              <ion-icon item-end name="calendar" color="icons"></ion-icon>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+        <ion-col col-6>
+          <ion-list>
+            <ion-item>
+              <!-- <ion-label>To</ion-label> -->
+              <ion-datetime displayFormat="DD/MM/YY" disabled="true" pickerFormat="DD-MMM-YYYY" placeholder="To" [(ngModel)]="toDate"
+                min="{{minValidationDate}}" ></ion-datetime>
+              <ion-icon item-end name="calendar" color="icons"></ion-icon>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </div>
+  
+    <!-- <div padding-left *ngIf="noOfDateSelected.length != 0"> -->
+    <div padding-left>  
+      <p color="primary">Free Timing :</p>
+    </div>
+    <!-- <div padding class="txt_para" *ngIf="noOfDateSelected.length == 0">
+      <p>To see Free timing of your friend you have to select a To date</p>
+    </!--> 
+    <ion-grid *ngIf="noOfDateSelected.length != 0">
+      <ion-row>
+        <ion-col></ion-col>
+        <ion-col *ngFor="let item of noOfDateSelected">{{getDay(item)}}</ion-col>
+        {{item}}
+      </ion-row>
+  
+      <ion-row align-items-center>
+        <ion-col>
+          <div>
+            <p><strong>8AM</strong></p>
+          </div>
+        </ion-col>
+        <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+          <ion-col (click)="makeInActive10(i)" *ngIf="i == getIndex10(i) && isActive10[i].activeValue == true">
+            <div class="col_border col_bg"></div>
+          </ion-col>
+          <ion-col (click)="makeActive10(i)" *ngIf="i == getIndex10(i) && isActive10[i].activeValue == false">
+            <div class="col_border"></div>
+          </ion-col>
+        </ng-container>
+      </ion-row>
+  
+      <ion-row align-items-center>
+        <ion-col>
+          <div>
+            <p><strong>9AM</strong></p>
+          </div>
+        </ion-col>
+        <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+          <ion-col (click)="makeInActive(i)" *ngIf="i == getIndex(i) && isActive[i].activeValue == true">
+            <div class="col_border col_bg"></div>
+          </ion-col>
+          <ion-col (click)="makeActive(i)" *ngIf="i == getIndex(i) && isActive[i].activeValue == false">
+            <div class="col_border"></div>
+          </ion-col>
+        </ng-container>
+      </ion-row>
+      
+      <ion-row align-items-center>
+        <ion-col>
+          <div>
+            <p><strong>10AM</strong></p>
+          </div>
+        </ion-col>
+        <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+          <ion-col (click)="makeInActive1(i)" *ngIf="i == getIndex1(i) && isActive1[i].activeValue == true">
+            <div class="col_border col_bg"></div>
+          </ion-col>
+          <ion-col (click)="makeActive1(i)" *ngIf="i == getIndex1(i) && isActive1[i].activeValue == false">
+            <div class="col_border"></div>
+          </ion-col>
+        </ng-container>
+      </ion-row>
+      <ion-row align-items-center>
+        <ion-col>
+          <div>
+            <p><strong>11AM</strong></p>
+          </div>
+        </ion-col>
+        <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+          <ion-col (click)="makeInActive2(i)" *ngIf="i == getIndex2(i) && isActive2[i].activeValue == true">
+            <div class="col_border col_bg"></div>
+          </ion-col>
+          <ion-col (click)="makeActive2(i)" *ngIf="i == getIndex2(i) && isActive2[i].activeValue == false">
+            <div class="col_border"></div>
+          </ion-col>
+        </ng-container>
+      </ion-row>
+      <ion-row align-items-center>
+        <ion-col>
+          <div>
+            <p><strong>12PM</strong></p>
+          </div>
+        </ion-col>
+        <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+          <ion-col (click)="makeInActive3(i)" *ngIf="i == getIndex3(i) && isActive3[i].activeValue == true">
+            <div class="col_border col_bg"></div>
+          </ion-col>
+          <ion-col (click)="makeActive3(i)" *ngIf="i == getIndex3(i) && isActive3[i].activeValue == false">
+            <div class="col_border"></div>
+          </ion-col>
+        </ng-container>
+      </ion-row>
+      <ion-row align-items-center>
+        <ion-col>
+          <div>
+            <p><strong>1PM</strong></p>
+          </div>
+        </ion-col>
+        <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+          <ion-col (click)="makeInActive4(i)" *ngIf="i == getIndex4(i) && isActive4[i].activeValue == true">
+            <div class="col_border col_bg"></div>
+          </ion-col>
+          <ion-col (click)="makeActive4(i)" *ngIf="i == getIndex4(i) && isActive4[i].activeValue == false">
+            <div class="col_border"></div>
+          </ion-col>
+        </ng-container>
+      </ion-row>
+      <ion-row align-items-center>
+        <ion-col>
+          <div>
+            <p><strong>2PM</strong></p>
+          </div>
+        </ion-col>
+        <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+          <ion-col (click)="makeInActive5(i)" *ngIf="i == getIndex5(i) && isActive5[i].activeValue == true">
+            <div class="col_border col_bg"></div>
+          </ion-col>
+          <ion-col (click)="makeActive5(i)" *ngIf="i == getIndex5(i) && isActive5[i].activeValue == false">
+            <div class="col_border"></div>
+          </ion-col>
+        </ng-container>
+      </ion-row>
+      <ion-row align-items-center>
+        <ion-col>
+          <div>
+            <p><strong>3PM</strong></p>
+          </div>
+        </ion-col>
+        <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+          <ion-col (click)="makeInActive6(i)" *ngIf="i == getIndex6(i) && isActive6[i].activeValue == true">
+            <div class="col_border col_bg"></div>
+          </ion-col>
+          <ion-col (click)="makeActive6(i)" *ngIf="i == getIndex6(i) && isActive6[i].activeValue == false">
+            <div class="col_border"></div>
+          </ion-col>
+        </ng-container>
+      </ion-row>
+      <ion-row align-items-center>
+        <ion-col>
+          <div>
+            <p><strong>4PM</strong></p>
+          </div>
+        </ion-col>
+        <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+          <ion-col (click)="makeInActive7(i)" *ngIf="i == getIndex7(i) && isActive7[i].activeValue == true">
+            <div class="col_border col_bg"></div>
+          </ion-col>
+          <ion-col (click)="makeActive7(i)" *ngIf="i == getIndex7(i) && isActive7[i].activeValue == false">
+            <div class="col_border"></div>
+          </ion-col>
+        </ng-container>
+      </ion-row>
+      <ion-row align-items-center>
+        <ion-col>
+          <div>
+            <p><strong>5PM</strong></p>
+          </div>
+        </ion-col>
+        <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+          <ion-col (click)="makeInActive8(i)" *ngIf="i == getIndex8(i) && isActive8[i].activeValue == true">
+            <div class="col_border col_bg"></div>
+          </ion-col>
+          <ion-col (click)="makeActive8(i)" *ngIf="i == getIndex8(i) && isActive8[i].activeValue == false">
+            <div class="col_border"></div>
+          </ion-col>
+        </ng-container>
+      </ion-row>
+      <ion-row align-items-center>
+        <ion-col>
+          <div>
+            <p><strong>6PM</strong></p>
+          </div>
+        </ion-col>
+        <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+          <ion-col (click)="makeInActive9(i)" *ngIf="i == getIndex9(i) && isActive9[i].activeValue == true">
+            <div class="col_border col_bg"></div>
+          </ion-col>
+          <ion-col (click)="makeActive9(i)" *ngIf="i == getIndex9(i) && isActive9[i].activeValue == false">
+            <div class="col_border"></div>
+          </ion-col>
+        </ng-container>
+      </ion-row>
+      <ion-row align-items-center>
+        <ion-col>
+          <div>
+            <p><strong>7PM</strong></p>
+          </div>
+        </ion-col>
+        <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+          <ion-col (click)="makeInActive11(i)" *ngIf="i == getIndex11(i) && isActive11[i].activeValue == true">
+            <div class="col_border col_bg"></div>
+          </ion-col>
+          <ion-col (click)="makeActive11(i)" *ngIf="i == getIndex11(i) && isActive11[i].activeValue == false">
+            <div class="col_border"></div>
+          </ion-col>
+        </ng-container>
+      </ion-row>
+      <ion-row align-items-center>
+        <ion-col>
+          <div>
+            <p><strong>8PM</strong></p>
+          </div>
+        </ion-col>
+        <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+          <ion-col (click)="makeInActive12(i)" *ngIf="i == getIndex12(i) && isActive12[i].activeValue == true">
+            <div class="col_border col_bg"></div>
+          </ion-col>
+          <ion-col (click)="makeActive12(i)" *ngIf="i == getIndex12(i) && isActive12[i].activeValue == false">
+            <div class="col_border"></div>
+          </ion-col>
+        </ng-container>
+      </ion-row>
+    </ion-grid>
+  </ion-content>

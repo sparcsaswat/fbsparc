@@ -1,0 +1,561 @@
+<!-- <ion-header>
+  <ion-navbar color="primary">
+    <ion-buttons right>
+      <button ion-button clear color="light" (click)="editProfile()">
+        <ion-icon name="create"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header> -->
+
+<ion-content no-bounce>
+  <div class="banner">
+    <div text-right style="padding-right: 56px;"><button ion-button color="light" clear small (click)="editedData()">Save</button></div>
+    <ion-card no-padding>
+      <div class="user-info">
+        <div class="user-img" (click)="presentActionSheet()">
+          <img src="{{profileImage}}" onerror="this.src='./assets/imgs/img4.jpg'">
+          <ion-icon name="camera"></ion-icon>
+        </div>
+        <div text-left padding-left padding-right>
+          <ion-input [(ngModel)]="editName"></ion-input>
+          <p>
+            <img src="{{countryFlag}}">
+            <small>{{countryName}}</small>
+          </p>
+        </div>
+      </div>
+
+      <ion-grid no-padding>
+        <ion-row no-padding>
+          <ion-col>
+            <h4><b>{{foodprintCount}}</b></h4>
+            <ion-icon name="restaurant" item-start color="icons"></ion-icon>
+            <small>Foodprint</small>
+          </ion-col>
+          <ion-col>
+            <h4><b>{{foodPreferenceArr.length}}</b></h4>
+            <ion-icon name="restaurant" item-start color="icons"></ion-icon>
+            <small>Cuisines</small>
+          </ion-col>
+          <!-- <ion-col col-3>
+            <h4><b>9</b></h4>
+            <ion-icon name="home" item-start color="icons"></ion-icon>
+            <small>Restaurant</small>
+          </ion-col> -->
+          <ion-col>
+            <h4><b>{{buddiesCount}}</b></h4>
+            <ion-icon name="contacts" item-start color="icons"></ion-icon>
+            <small>Buddies</small>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </div>
+  <div class="contnt_sec">
+
+    <div padding class="input_sec">
+      <ion-list no-lines no-margin *ngIf="bio == undefined || bio == null">
+        <ion-item>
+          <ion-input placeholder="Enter something about you" [(ngModel)]="bio"></ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-list no-lines no-margin *ngIf="bio != undefined || bio != null">
+        <ion-item>
+          <ion-input [(ngModel)]="bio"></ion-input>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <div padding class="btn_sec">
+
+      <ion-row>
+        <ion-col col-4 text-center [ngClass]="{'active': activeTab=='preferences'}">
+          <button ion-button clear text-capitalize (click)="loadData('preferences')">preferenes</button>
+        </ion-col>
+        <ion-col col-4 text-center [ngClass]="{'active': activeTab=='interest'}">
+          <button ion-button clear text-capitalize (click)="loadData('interest')">Interest</button>
+        </ion-col>
+
+        <ion-col col-4 text-center [ngClass]="{'active': activeTab=='calender'}">
+          <button ion-button clear text-capitalize (click)="loadData('calender')">Calender</button>
+        </ion-col>
+      </ion-row>
+      <!-- <ion-row>
+        <ion-col col-4 text-center>
+          <button ion-button round color="dark" text-capitalize (click)="userInterest()">Interest</button>
+        </ion-col>
+        <ion-col col-4 text-center>
+          <button ion-button clear color="dark" text-capitalize>Near Me</button>
+        </ion-col>
+        <ion-col col-4 text-center>
+          <button ion-button clear color="dark" text-capitalize>Calender</button>
+        </ion-col>
+      </ion-row> -->
+
+    </div>
+
+    <div no-padding *ngIf="activeTab=='interest'">
+      <div class="added-items" *ngIf="noOfInterest ==1">
+        <label *ngFor="let item of interest; let j = index">
+          {{interest[j]}}
+          <button ion-button clear small icon-only (click)="clearInterest(item,j)" color="danger">
+            <ion-icon name="md-close"></ion-icon>
+          </button>
+        </label>
+      </div>
+    </div>
+
+    <div padding class="card_sec" *ngIf="activeTab=='preferences'">
+    
+      <ion-row *ngIf="foodPreferenceArr.length!=0">
+        <ion-col col-6 *ngFor="let item of imgArr">
+          <div class="img-wrapper">
+            <img src="{{item.img}}" />
+            <!-- <img src="{{getFoodImage(item.ImageUrl)}}" alt="" onerror="this.src='./assets/imgs/photo-camera.png'" /> -->
+            <p>{{item.name}}</p>
+            <button ion-button clear small icon-only (click)="clearFoodPref(item,j)" color="danger">
+              <ion-icon name="md-close"></ion-icon>
+            </button>
+          </div>
+        </ion-col>
+      </ion-row>
+      <div *ngIf="foodPreferenceArr.length==0"> No food preference choosen</div>
+
+    </div>
+
+    <div no-padding class="calender_area" *ngIf="activeTab=='calender'">
+      
+        <div padding class="calender_sec">
+          <label>Select Date</label>
+          <ion-row>
+            <ion-col col-6>
+              <ion-list>
+                <ion-item>
+                  <ion-datetime displayFormat="DD/MM/YY" pickerFormat="DD-MM-YY" [(ngModel)]="fromDate"
+                    (ngModelChange)="todateValue($event)" min="{{minValidationDate}}" max="{{toDate}}"></ion-datetime>
+                  <ion-icon item-end name="calendar" color="icons"></ion-icon>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+            <ion-col col-6>
+              <ion-list>
+                <ion-item>
+                  <ion-datetime [disabled]="true" displayFormat="DD/MM/YY" pickerFormat="DD-MM-YY" [(ngModel)]="toDate">
+                  </ion-datetime>
+                  <ion-icon item-end name="calendar" color="icons"></ion-icon>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+        </div>
+
+        <ng-container *ngIf="userFreeTimming.length>0">
+        <div class="free-time" padding-left>
+          <p color="primary">Free Timing :</p>
+        </div>
+
+        <div *ngIf="dateClick == 0">
+          <ion-grid>
+            <ion-row>
+              <ion-col></ion-col>
+              <ion-col *ngFor="let item of userFreeTimming"><b>{{item.day}}</b></ion-col>
+            </ion-row>
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>8AM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of userFreeTimming; let i = index">
+                <ion-col>
+                  <div *ngIf="userFreeTimming[i].timeSlot1=='0'" class="col_border"></div>
+                  <div *ngIf="userFreeTimming[i].timeSlot1==1" class="col_border col_bg"></div>
+                </ion-col>
+              </ng-container>
+            </ion-row>
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>9AM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of userFreeTimming; let i = index">
+                <ion-col>
+                  <div *ngIf="userFreeTimming[i].timeSlot2=='0'" class="col_border"></div>
+                  <div *ngIf="userFreeTimming[i].timeSlot2==1" class="col_border col_bg"></div>
+                </ion-col>
+              </ng-container>
+            </ion-row>
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>10AM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of userFreeTimming; let i = index">
+                <ion-col>
+                  <div *ngIf="userFreeTimming[i].timeSlot3=='0'" class="col_border"></div>
+                  <div *ngIf="userFreeTimming[i].timeSlot3==1" class="col_border col_bg"></div>
+                </ion-col>
+              </ng-container>
+            </ion-row>
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>11AM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of userFreeTimming; let i = index">
+                <ion-col>
+                  <div *ngIf="userFreeTimming[i].timeSlot4=='0'" class="col_border"></div>
+                  <div *ngIf="userFreeTimming[i].timeSlot4==1" class="col_border col_bg"></div>
+                </ion-col>
+              </ng-container>
+            </ion-row>
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>12PM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of userFreeTimming; let i = index">
+                <ion-col>
+                  <div *ngIf="userFreeTimming[i].timeSlot5=='0'" class="col_border"></div>
+                  <div *ngIf="userFreeTimming[i].timeSlot5==1" class="col_border col_bg"></div>
+                </ion-col>
+              </ng-container>
+            </ion-row>
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>1PM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of userFreeTimming; let i = index">
+                <ion-col>
+                  <div *ngIf="userFreeTimming[i].timeSlot6=='0'" class="col_border"></div>
+                  <div *ngIf="userFreeTimming[i].timeSlot6==1" class="col_border col_bg"></div>
+                </ion-col>
+              </ng-container>
+            </ion-row>
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>2PM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of userFreeTimming; let i = index">
+                <ion-col>
+                  <div *ngIf="userFreeTimming[i].timeSlot7=='0'" class="col_border"></div>
+                  <div *ngIf="userFreeTimming[i].timeSlot7==1" class="col_border col_bg"></div>
+                </ion-col>
+              </ng-container>
+
+            </ion-row>
+
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>3PM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of userFreeTimming; let i = index">
+                <ion-col>
+                  <div *ngIf="userFreeTimming[i].timeSlot8=='0'" class="col_border"></div>
+                  <div *ngIf="userFreeTimming[i].timeSlot8==1" class="col_border col_bg"></div>
+                </ion-col>
+              </ng-container>
+
+            </ion-row>
+
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>4PM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of userFreeTimming; let i = index">
+                <ion-col>
+                  <div *ngIf="userFreeTimming[i].timeSlot9=='0'" class="col_border"></div>
+                  <div *ngIf="userFreeTimming[i].timeSlot9==1" class="col_border col_bg"></div>
+                </ion-col>
+              </ng-container>
+
+            </ion-row>
+
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>5PM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of userFreeTimming; let i = index">
+                <ion-col>
+                  <div *ngIf="userFreeTimming[i].timeSlot10=='0'" class="col_border"></div>
+                  <div *ngIf="userFreeTimming[i].timeSlot10==1" class="col_border col_bg"></div>
+                </ion-col>
+              </ng-container>
+
+            </ion-row>
+
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>6PM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of userFreeTimming; let i = index">
+                <ion-col>
+                  <div *ngIf="userFreeTimming[i].timeSlot11=='0'" class="col_border"></div>
+                  <div *ngIf="userFreeTimming[i].timeSlot11==1" class="col_border col_bg"></div>
+                </ion-col>
+              </ng-container>
+
+            </ion-row>
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>7PM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of userFreeTimming; let i = index">
+                <ion-col>
+                  <div *ngIf="userFreeTimming[i].timeSlot12=='0'" class="col_border"></div>
+                  <div *ngIf="userFreeTimming[i].timeSlot12==1" class="col_border col_bg"></div>
+                </ion-col>
+              </ng-container>
+
+            </ion-row>
+
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>8PM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of userFreeTimming; let i = index">
+                <ion-col>
+                  <div *ngIf="userFreeTimming[i].timeSlot13=='0'" class="col_border"></div>
+                  <div *ngIf="userFreeTimming[i].timeSlot13==1" class="col_border col_bg"></div>
+                </ion-col>
+              </ng-container>
+            </ion-row>
+          </ion-grid>
+        </div>
+
+        <div *ngIf="dateClick == 1">
+          <ion-grid *ngIf="noOfDateSelected.length != 0">
+            <ion-row>
+              <ion-col></ion-col>
+              <ion-col *ngFor="let item of noOfDateSelected">{{getDay(item)}}</ion-col>
+              {{item}}
+            </ion-row>
+
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>8AM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+                <ion-col (click)="makeInActive10(i)" *ngIf="i == getIndex10(i) && isActive10[i].activeValue == true">
+                  <div class="col_border col_bg"></div>
+                </ion-col>
+                <ion-col (click)="makeActive10(i)" *ngIf="i == getIndex10(i) && isActive10[i].activeValue == false">
+                  <div class="col_border"></div>
+                </ion-col>
+              </ng-container>
+            </ion-row>
+
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>9AM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+                <ion-col (click)="makeInActive(i)" *ngIf="i == getIndex(i) && isActive[i].activeValue == true">
+                  <div class="col_border col_bg"></div>
+                </ion-col>
+                <ion-col (click)="makeActive(i)" *ngIf="i == getIndex(i) && isActive[i].activeValue == false">
+                  <div class="col_border"></div>
+                </ion-col>
+              </ng-container>
+            </ion-row>
+
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>10AM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+                <ion-col (click)="makeInActive1(i)" *ngIf="i == getIndex1(i) && isActive1[i].activeValue == true">
+                  <div class="col_border col_bg"></div>
+                </ion-col>
+                <ion-col (click)="makeActive1(i)" *ngIf="i == getIndex1(i) && isActive1[i].activeValue == false">
+                  <div class="col_border"></div>
+                </ion-col>
+              </ng-container>
+            </ion-row>
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>11AM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+                <ion-col (click)="makeInActive2(i)" *ngIf="i == getIndex2(i) && isActive2[i].activeValue == true">
+                  <div class="col_border col_bg"></div>
+                </ion-col>
+                <ion-col (click)="makeActive2(i)" *ngIf="i == getIndex2(i) && isActive2[i].activeValue == false">
+                  <div class="col_border"></div>
+                </ion-col>
+              </ng-container>
+            </ion-row>
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>12PM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+                <ion-col (click)="makeInActive3(i)" *ngIf="i == getIndex3(i) && isActive3[i].activeValue == true">
+                  <div class="col_border col_bg"></div>
+                </ion-col>
+                <ion-col (click)="makeActive3(i)" *ngIf="i == getIndex3(i) && isActive3[i].activeValue == false">
+                  <div class="col_border"></div>
+                </ion-col>
+              </ng-container>
+            </ion-row>
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>1PM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+                <ion-col (click)="makeInActive4(i)" *ngIf="i == getIndex4(i) && isActive4[i].activeValue == true">
+                  <div class="col_border col_bg"></div>
+                </ion-col>
+                <ion-col (click)="makeActive4(i)" *ngIf="i == getIndex4(i) && isActive4[i].activeValue == false">
+                  <div class="col_border"></div>
+                </ion-col>
+              </ng-container>
+            </ion-row>
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>2PM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+                <ion-col (click)="makeInActive5(i)" *ngIf="i == getIndex5(i) && isActive5[i].activeValue == true">
+                  <div class="col_border col_bg"></div>
+                </ion-col>
+                <ion-col (click)="makeActive5(i)" *ngIf="i == getIndex5(i) && isActive5[i].activeValue == false">
+                  <div class="col_border"></div>
+                </ion-col>
+              </ng-container>
+            </ion-row>
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>3PM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+                <ion-col (click)="makeInActive6(i)" *ngIf="i == getIndex6(i) && isActive6[i].activeValue == true">
+                  <div class="col_border col_bg"></div>
+                </ion-col>
+                <ion-col (click)="makeActive6(i)" *ngIf="i == getIndex6(i) && isActive6[i].activeValue == false">
+                  <div class="col_border"></div>
+                </ion-col>
+              </ng-container>
+            </ion-row>
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>4PM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+                <ion-col (click)="makeInActive7(i)" *ngIf="i == getIndex7(i) && isActive7[i].activeValue == true">
+                  <div class="col_border col_bg"></div>
+                </ion-col>
+                <ion-col (click)="makeActive7(i)" *ngIf="i == getIndex7(i) && isActive7[i].activeValue == false">
+                  <div class="col_border"></div>
+                </ion-col>
+              </ng-container>
+            </ion-row>
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>5PM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+                <ion-col (click)="makeInActive8(i)" *ngIf="i == getIndex8(i) && isActive8[i].activeValue == true">
+                  <div class="col_border col_bg"></div>
+                </ion-col>
+                <ion-col (click)="makeActive8(i)" *ngIf="i == getIndex8(i) && isActive8[i].activeValue == false">
+                  <div class="col_border"></div>
+                </ion-col>
+              </ng-container>
+            </ion-row>
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>6PM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+                <ion-col (click)="makeInActive9(i)" *ngIf="i == getIndex9(i) && isActive9[i].activeValue == true">
+                  <div class="col_border col_bg"></div>
+                </ion-col>
+                <ion-col (click)="makeActive9(i)" *ngIf="i == getIndex9(i) && isActive9[i].activeValue == false">
+                  <div class="col_border"></div>
+                </ion-col>
+              </ng-container>
+            </ion-row>
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>7PM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+                <ion-col (click)="makeInActive11(i)" *ngIf="i == getIndex11(i) && isActive11[i].activeValue == true">
+                  <div class="col_border col_bg"></div>
+                </ion-col>
+                <ion-col (click)="makeActive11(i)" *ngIf="i == getIndex11(i) && isActive11[i].activeValue == false">
+                  <div class="col_border"></div>
+                </ion-col>
+              </ng-container>
+            </ion-row>
+            <ion-row align-items-center>
+              <ion-col>
+                <div>
+                  <p><strong>8PM</strong></p>
+                </div>
+              </ion-col>
+              <ng-container *ngFor="let item of noOfDateSelected; let i = index">
+                <ion-col (click)="makeInActive12(i)" *ngIf="i == getIndex12(i) && isActive12[i].activeValue == true">
+                  <div class="col_border col_bg"></div>
+                </ion-col>
+                <ion-col (click)="makeActive12(i)" *ngIf="i == getIndex12(i) && isActive12[i].activeValue == false">
+                  <div class="col_border"></div>
+                </ion-col>
+              </ng-container>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </ng-container>
+      <!-- <div text-center>
+        <p>Free time has not been set yet.</p>
+      </div> -->
+
+    </div>
+  </div>
+</ion-content>

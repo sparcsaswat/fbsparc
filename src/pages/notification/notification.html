@@ -1,0 +1,131 @@
+<ion-header>
+  <ion-navbar color="light">
+    <ion-title color="primary">Notification</ion-title>
+  </ion-navbar>
+  <ion-toolbar color="primary">
+    <ion-row>
+      <ion-col>
+        <button ion-button clear text-capitalize full no-margin color="light" (click)="loadData('calender')"
+          [ngClass]="{'active': activeTab=='calender'}">
+          Calender
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button clear text-capitalize full no-margin color="light" (click)="loadData('notification')"
+          [ngClass]="{'active': activeTab=='notification'}">
+          Notification
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content no-bounce>
+  <ng-container *ngIf="activeTab=='calender'">
+    <div class="header">
+      <h4>Scheduled Meets</h4>
+      <div class="meeting-wrapper">
+        <ng-container *ngIf="scheduledMeetsNotifData.length>0">
+          <ion-list no-lines>
+            <ion-item *ngFor="let item of scheduledMeetsNotifData">
+              <ion-avatar item-start>
+                <img src="../assets/imgs/user.png">
+              </ion-avatar>
+              <h2 text-wrap>{{item.fromUserName}}</h2>
+              <p><small>on {{getFormatedDate(item.meetingDateAndTime)}}</small></p>
+              <ion-note item-right>{{currentTime}}
+              <!-- <ion-icon name="checkmark"></ion-icon> -->
+              </ion-note>
+              <button ion-button clear color="toggle" item-right *ngIf="flag1==0" (click)="acceptMeetupRequest(item.meetupScheduleId,'2')">
+                <ion-icon name="md-checkmark"></ion-icon>
+              </button>
+              <button ion-button clear color="danger" item-right *ngIf="flag1==0" (click)="rejectMeetupRequest(item.meetupScheduleId,'3')">
+                <ion-icon name="md-close"></ion-icon>
+              </button>
+               <p *ngIf="flag1==1">Accepted</p>
+            </ion-item>
+          </ion-list>
+        </ng-container>
+        <div class="no-notification" *ngIf="scheduledMeetsNotifData.length==0" padding-top text-center>
+          <ion-icon name="ios-notifications-off-outline"></ion-icon>
+          <p>Currently no meetup's scheduled for you.</p>
+        </div>
+      </div>
+    </div>
+    <div padding class="freetiming_sec">
+      <div *ngIf="allFreeFriends.length>0">
+        <ion-list no-lines >
+          <h4>Free Timings</h4>
+          <ion-item *ngFor="let item of allFreeFriends">
+            <ion-avatar item-start>
+              <img src="../assets/imgs/user.png">
+            </ion-avatar>
+            <h2 text-wrap>{{item.fromUserName}}</h2>
+            <p item-end>on {{item.requestDate}}</p>
+          </ion-item>
+         </ion-list>
+      </div>
+      <p *ngIf="allFreeFriends.length==0">No friend's available</p>
+    </div>
+
+
+  </ng-container>
+
+  <div *ngIf="activeTab=='notification'">
+    <div class="header">
+      <h4>Scheduled Meets</h4>
+      <div class="meeting-wrapper">
+        <ng-container *ngIf="scheduledMeetsNotifData.length>0">
+          <ion-list no-lines>
+            <ion-item *ngFor="let item of scheduledMeetsNotifData">
+              <ion-avatar item-start>
+                <img src="../assets/imgs/user.png">
+              </ion-avatar>
+              <h2 text-wrap>{{item.fromUserName}}</h2>
+              <p><small>on {{getFormatedDate(item.meetingDateAndTime)}}</small></p>
+              <ion-note item-right>{{currentTime}} 
+                <!-- <ion-icon name="md-checkmark"></ion-icon> -->
+              </ion-note>
+              <button ion-button clear color="toggle" item-right  *ngIf="flag1==0" (click)="acceptMeetupRequest(item.meetupScheduleId,'2')">
+                  <ion-icon name="md-checkmark"></ion-icon>
+                </button>
+                <button ion-button clear color="danger" item-right  *ngIf="flag1==0" (click)="rejectMeetupRequest(item.meetupScheduleId,'3')">
+                  <ion-icon name="md-close"></ion-icon>
+                </button>
+                 <p *ngIf="flag1==1">Accepted</p>
+            </ion-item>
+          </ion-list>
+        </ng-container>
+        <div class="no-notification" *ngIf="scheduledMeetsNotifData.length==0" padding-top text-center>
+          <ion-icon name="ios-notifications-off-outline"></ion-icon>
+          <p>Currently no meetup's scheduled for you.</p>
+        </div>
+      </div>
+    </div>
+    <div padding class="freetiming_sec">
+      <h4>Message Request</h4>
+      <ion-list no-lines *ngIf="notificationData.length != 0">
+          <ion-item *ngFor="let item of notificationData">
+            <ion-avatar item-start>
+              <img src="../assets/imgs/user.png">
+            </ion-avatar>
+            <h2 text-wrap>{{item.message}}</h2>
+            <!-- <ion-note item-end>1</ion-note> -->
+            <button ion-button clear icon-only *ngIf="flag==0" color="toggle" item-right (click)="acceptRequest(item.meetupRequestId)">
+              <ion-icon name="md-checkmark"></ion-icon>
+            </button>
+            <button ion-button clear icon-only *ngIf="flag==0" color="danger" item-right (click)="rejectRequest(item.meetupRequestId)">
+              <ion-icon name="md-close"></ion-icon>
+            </button>
+            <p *ngIf="flag==1">Accepted</p>
+
+          </ion-item>
+        </ion-list>
+        <ion-list no-lines *ngIf="notificationData.length == 0">
+          <ion-item>
+            <p>No message request found.</p>
+          </ion-item>
+        </ion-list>
+    </div>
+  </div>
+</ion-content>

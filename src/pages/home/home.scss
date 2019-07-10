@@ -1,0 +1,93 @@
+page-home {
+    ion-content {
+        background: {
+            color: #fff!important;
+            image: url(../assets/imgs/home-bg.jpg);
+            position: bottom center;
+            size: 100% auto;
+            repeat: no-repeat;
+        };
+        .header-btns {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            padding: 10px;
+            z-index: 9;
+            width: 100%;
+        }
+        .user-info {
+            padding: 16px;
+            padding-top: 44px;
+            .logo-circle {
+                width: 78px;
+                height: 78px;
+                border-radius: 50%;
+                border: 2px solid map-get($colors, primary);
+                overflow: hidden;
+                img {
+                    max-width: 67%;
+                    display: block;
+                    margin: 10px auto 0;
+                }
+            }
+            p {
+                background-color: #2D489C;
+                -webkit-box-shadow: 0px -1px 2px #ccc, 0px 1px 2px #eee;
+                box-shadow: 0px -1px 2px #ccc, 0px 1px 2px #eee;
+                border-radius: 20px;
+                padding: 8px 15px;
+                position: relative;
+                margin-top: 18px;
+                color: #fff;
+                &:before {
+                    content: "";
+                    position: absolute;
+                    top: -10px;
+                    left: 20px;
+                    width: 0; 
+                    height: 0; 
+                    border-left: 10px solid transparent;
+                    border-right: 10px solid transparent;
+                    border-bottom: 10px solid #2D489C;
+                }
+            }
+        }
+        .action-btns {
+            padding: 50px;
+            padding-top:0px;
+            text-align: center;
+            div {
+                //line-height: 20px;
+                padding-left:12px;
+                margin-bottom: 30px;
+                padding: 22px;
+                background: #fff;
+                border-radius:50px;
+                color:#2D489C;
+                font-weight: bold;
+                font-size: 1.4rem;
+                box-shadow: 0px -1px 8px #ccc;
+            }
+                // img {
+                //     width: 200px;
+                // }
+                .img_border {
+                    position: relative;
+                    padding-right: 0px!important;
+                    .img_sec {
+                        position: absolute;
+                        top: -8px;
+                        height: 75px;
+                        width: 75px;
+                        left: -7px;
+                        box-shadow: 0px -1px 8px #ccc;
+                        ion-icon {
+                            font-size: 2.5em;
+                            margin: -4px auto;
+                        }
+                    }
+                }
+            }
+        }
+   
+}

@@ -1,0 +1,8 @@
+<ion-tabs #myTabs (ionChange)="checkActiveTab()" selectedIndex="2">
+  <ion-tab [root]="tab1Root" tabTitle="" tabIcon="ios-locate-outline"></ion-tab>
+  <ion-tab [root]="tab2Root" tabTitle="" tabIcon="ios-notifications-outline"></ion-tab>
+  <ion-tab [root]="tab3Root" tabTitle="" tabIcon="ios-add-outline"></ion-tab>
+  <ion-tab [root]="tab4Root" tabTitle="" tabIcon="ios-chatbubbles-outline"></ion-tab>
+  <ion-tab [root]="tab5Root" tabTitle="" tabIcon="ios-person-outline"></ion-tab>
+</ion-tabs>
+<div text-right *ngIf="activeTab == 4" style="padding: 10px 0px 0px;"><button ion-button icon-only clear color="light" class="more-btn" (click)="showOption($event)" ><ion-icon name="settings"></ion-icon></button></div>

@@ -1,0 +1,124 @@
+<ion-header>
+  <ion-navbar color="light">
+    <ion-title color="primary">Explore</ion-title>
+  </ion-navbar>
+  <ion-toolbar color="primary">
+    <ion-row>
+      <ion-col>
+        <button ion-button clear text-capitalize full no-margin color="light" (click)="loadData('people')"
+          [ngClass]="{'active': activeTab=='people'}">
+          Explore People
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button clear text-capitalize full no-margin color="light" (click)="loadData('places')"
+          [ngClass]="{'active': activeTab=='places'}">
+          Explore Places
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content no-bounce>
+  <ion-grid no-padding *ngIf="activeTab=='people'" no-bounce>
+    <ion-row>
+      <ion-col>
+        <!-- <div no-padding class="map_area">
+              <img src="../assets/imgs/maps.jpg" />
+            </div> -->
+        <div id="googleMap" style="width:100%;height:200px;"></div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <div class="cntnt_sec">
+          <ion-card class="connect" (click)="connect()">
+            <ion-list no-lines>
+              <ion-item>
+                <ion-avatar item-start>
+                  <button ion-button round color="secondary">{{totalInterestData}}</button>
+                </ion-avatar>
+                <h4><strong>Quick Connect</strong></h4>
+                <p>Grab a quick bite right now</p>
+                <ion-icon name="ios-arrow-round-forward" item-right color="light"></ion-icon>
+              </ion-item>
+            </ion-list>
+          </ion-card>
+          <ion-card class="buddies">
+            <ion-list no-lines>
+              <ion-item>
+                <ion-avatar item-start>
+                  <button ion-button round color="primary">{{interestData.length}}</button>
+                </ion-avatar>
+                <h4><strong>Food Buddies</strong></h4>
+                <p text-wrap>Connect effortlessly with our
+                  FoodBuddy network </p>
+              </ion-item>
+            </ion-list>
+          </ion-card>
+          <div padding class="card_sec">
+            <ion-row class="btn-nav">
+              <ion-col col-6 *ngFor="let item of interestData">
+                <ion-card (click)="goToProfileInfo(item.userId)">
+                  <div class="card1_bg" text-center>
+                    <p>
+                      <strong>{{item.name.charAt(0)}}</strong>
+                    </p>
+                  </div>
+                  <p>{{item.name}}</p>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div no-padding *ngIf="activeTab=='places'">
+    <div class="header">
+      <h4>Within radius of 1 km</h4>
+      <div class="restaurant-wrapper">
+        <ion-list no-lines>
+          <ng-container *ngFor="let item of restaurantData">
+            <ion-item [ngClass]="{'active': restaurantId == item.ResturantId}" (click)="onFoodTypeChange(item.ResturantId)">
+              <ion-avatar item-start>
+                <ion-icon ios="ios-cafe" md="md-cafe"></ion-icon>
+              </ion-avatar>
+              <h4><strong>{{item.ResturantName}}</strong></h4>
+              <p>{{item.StreetAddress}}</p>
+            </ion-item>
+          </ng-container>
+        </ion-list>
+      </div>
+    </div>
+
+    <div padding class="food_sec">
+      <h4>Choose the food type</h4>
+      <ion-row nowrap>
+        <ion-col col-4 *ngFor="let item of foodCuisine">
+          <div class="img-wrapper" text-left>
+            <img src="{{imgUrl + item.ImageUrl}}" alt="" onerror="this.src='./assets/imgs/photo-camera.png'" />
+            <p>{{item.FoodPreferences}}</p>
+            <!-- <button ion-button small>
+                  <ion-icon name="checkmark" color="dark"></ion-icon>
+                </button> -->
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div padding-horizontal class="rest_sec">
+      <h4>Nearby Restaurants</h4>
+      <ion-row nowrap>
+        <ion-col col-12 *ngFor="let item of restaurantData">
+          <div class="nearby-wrapper" text-left>
+            <img src="../assets/imgs/pizza.jpg" />
+            <h4>{{item.ResturantName}}</h4>
+            <p>View the five minute food menu</p>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
+</ion-content>

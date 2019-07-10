@@ -1,0 +1,31 @@
+  <ion-content padding>
+    <div class="header">
+      <img src="../assets/imgs/logobuddy.png">
+    </div>
+  
+
+    <ion-list no-lines>
+      <ion-item>
+        <ion-icon name="person" item-left color="light"></ion-icon>
+        <ion-input type="text" placeholder="Email Id" [(ngModel)]="emailId"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon item-left name="lock" color="light"></ion-icon>
+        <ion-input [type]="password_type" placeholder="Password" [(ngModel)]="password"></ion-input>
+        <button ion-button clear no-margin (click)="togglePasswordMode()" item-right color="light">
+          <ion-icon name="eye-off" *ngIf="password_type=='password'"></ion-icon>
+          <ion-icon name="eye" *ngIf="password_type=='text'"></ion-icon>
+        </button>
+      </ion-item>
+    </ion-list>
+ 
+
+  <div text-center class="login">
+    <button ion-button round color="secondary" (click)="login()">Login</button>
+  </div>
+  <br>
+  <p text-center>New Member?</p>
+  <div text-center class="signup">
+    <button ion-button round color="secondary" (click)="register()">Sign up</button>
+  </div>
+</ion-content>

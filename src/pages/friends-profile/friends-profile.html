@@ -1,0 +1,357 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Friend's Profile</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-bounce>
+  <div class="header">
+    <div no-padding class="banner">
+      <ion-card no-padding>
+        <div class="user-info">
+          <div class="user-img">
+            <img src="../assets/imgs/img4.jpg">
+          </div>
+          <div text-left padding-left padding-top padding-right>
+            <h2>{{data.name}}</h2>
+            <p>
+              <!-- <ion-icon name="pin" item-start color="primary"></ion-icon> -->
+              <img src="{{data.flagUrl}}">
+              <small>{{data.belongTo}}</small>
+            </p>
+          </div>
+        </div>
+
+        <ion-grid no-padding>
+          <ion-row no-padding>
+            <ion-col>
+              <h4><b>{{foodPrintCount}}</b></h4>
+              <ion-icon name="restaurant" item-start color="icons"></ion-icon>
+              <small>Foodprint</small>
+            </ion-col>
+            <ion-col>
+              <h4><b>{{cuisine}}</b></h4>
+              <ion-icon name="restaurant" item-start color="icons"></ion-icon>
+              <small>Cuisines</small>
+            </ion-col>
+            <ion-col>
+              <h4><b>{{buddiesCount}}</b></h4>
+              <ion-icon name="contacts" item-start color="icons"></ion-icon>
+              <small>Buddies</small>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </div>
+
+    <div class="navigate_btn" *ngIf="sendVal==2">
+      <ion-row>
+        <ion-col col-6 align-items-center>
+          <button ion-button round color="light" (click)="openModal = true">
+            <ion-icon ios="ios-send" md="md-send" color="btn"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </div>
+
+  </div>
+
+  <div class="contnt-sec">
+    <div class="frnd_rqst">
+      <ion-list no-lines>
+        <ion-item>
+          <!-- <h4><strong>Send Friend Request</strong></h4> -->
+          <!-- <button ion-button item-end color="primary" (click)="sendFriendRequest()">send</button> -->
+          <button ion-button item-end color="primary" (click)="sendFriendRequest()" *ngIf="sendVal==0">Add friend</button>
+          <button ion-button item-end color="secondary" *ngIf="sendVal==1">Request sent</button>
+          <button ion-button item-end color="toggle" *ngIf="sendVal==2">Accepted</button>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <div padding class="btn_sec">
+      <ion-row>
+        <ion-col col-4 text-center [ngClass]="{'active': activeTab=='preferences'}">
+          <button ion-button clear text-capitalize (click)="loadData('preferences')">preferenes</button>
+        </ion-col>
+        <ion-col col-4 text-center [ngClass]="{'active': activeTab=='interest'}">
+          <button ion-button clear text-capitalize (click)="loadData('interest')">Interest</button>
+        </ion-col>
+
+        <ion-col col-4 text-center [ngClass]="{'active': activeTab=='calender'}">
+          <button ion-button clear text-capitalize (click)="loadData('calender')">Calender</button>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div no-padding *ngIf="activeTab=='interest'">
+      <div class="added-items" *ngIf="noOfInterest ==1">
+        <label *ngFor="let item of interest; let j = index">
+          {{interest[j]}}
+        </label>
+      </div>
+    </div>
+
+    <div padding class="card_sec" *ngIf="activeTab=='preferences'">
+      <ng-container *ngIf="foodPreference.length>0">
+    <ion-row>
+          <ion-col col-6 *ngFor="let item of foodPreference">
+            <div class="img-wrapper">
+              <img src="{{getFoodImage(item.ImageUrl)}}" alt="" onerror="this.src='./assets/imgs/photo-camera.png'" />
+              <p>{{item.preferenceName}}</p>
+            </div>
+          </ion-col>
+        </ion-row>    
+      </ng-container>
+      <p *ngIf="foodPreference.length==0">Currently no preference available.</p>
+    </div>
+
+    <div no-padding class="calender_area" *ngIf="activeTab=='calender'">
+
+
+      <div class="free-time" padding-left>
+        <p color="primary">When am I available:</p>
+      </div>
+      <ion-grid>
+
+        <ion-row>
+          <ion-col></ion-col>
+          <ion-col *ngFor="let item of freeTimming"><b>{{item.day}}</b></ion-col>
+        </ion-row>
+
+        <ion-row align-items-center>
+          <ion-col>
+            <div>
+              <p><strong>8AM</strong></p>
+            </div>
+          </ion-col>
+          <ng-container *ngFor="let item of freeTimming; let i = index">
+            <ion-col>
+              <div *ngIf="freeTimming[i].timeSlot1=='0'" class="col_border"></div>
+              <div *ngIf="freeTimming[i].timeSlot1==1" class="col_border col_bg"></div>
+            </ion-col>
+          </ng-container>
+        </ion-row>
+
+        <ion-row align-items-center>
+          <ion-col>
+            <div>
+              <p><strong>9AM</strong></p>
+            </div>
+          </ion-col>
+          <ng-container *ngFor="let item of freeTimming; let i = index">
+            <ion-col>
+              <div *ngIf="freeTimming[i].timeSlot2=='0'" class="col_border"></div>
+              <div *ngIf="freeTimming[i].timeSlot2==1" class="col_border col_bg"></div>
+            </ion-col>
+          </ng-container>
+
+        </ion-row>
+
+        <ion-row align-items-center>
+          <ion-col>
+            <div>
+              <p><strong>10AM</strong></p>
+            </div>
+          </ion-col>
+          <ng-container *ngFor="let item of freeTimming; let i = index">
+            <ion-col>
+              <div *ngIf="freeTimming[i].timeSlot3=='0'" class="col_border"></div>
+              <div *ngIf="freeTimming[i].timeSlot3==1" class="col_border col_bg"></div>
+            </ion-col>
+          </ng-container>
+        </ion-row>
+
+        <ion-row align-items-center>
+          <ion-col>
+            <div>
+              <p><strong>11AM</strong></p>
+            </div>
+          </ion-col>
+          <ng-container *ngFor="let item of freeTimming; let i = index">
+            <ion-col>
+              <div *ngIf="freeTimming[i].timeSlot4=='0'" class="col_border"></div>
+              <div *ngIf="freeTimming[i].timeSlot4==1" class="col_border col_bg"></div>
+            </ion-col>
+          </ng-container>
+        </ion-row>
+
+        <ion-row align-items-center>
+          <ion-col>
+            <div>
+              <p><strong>12PM</strong></p>
+            </div>
+          </ion-col>
+          <ng-container *ngFor="let item of freeTimming; let i = index">
+            <ion-col>
+              <div *ngIf="freeTimming[i].timeSlot5=='0'" class="col_border"></div>
+              <div *ngIf="freeTimming[i].timeSlot5==1" class="col_border col_bg"></div>
+            </ion-col>
+          </ng-container>
+        </ion-row>
+
+        <ion-row align-items-center>
+          <ion-col>
+            <div>
+              <p><strong>1PM</strong></p>
+            </div>
+          </ion-col>
+          <ng-container *ngFor="let item of freeTimming; let i = index">
+            <ion-col>
+              <div *ngIf="freeTimming[i].timeSlot6=='0'" class="col_border"></div>
+              <div *ngIf="freeTimming[i].timeSlot6==1" class="col_border col_bg"></div>
+            </ion-col>
+          </ng-container>
+        </ion-row>
+
+        <ion-row align-items-center>
+          <ion-col>
+            <div>
+              <p><strong>2PM</strong></p>
+            </div>
+          </ion-col>
+          <ng-container *ngFor="let item of freeTimming; let i = index">
+            <ion-col>
+              <div *ngIf="freeTimming[i].timeSlot7=='0'" class="col_border"></div>
+              <div *ngIf="freeTimming[i].timeSlot7==1" class="col_border col_bg"></div>
+            </ion-col>
+          </ng-container>
+        </ion-row>
+
+        <ion-row align-items-center>
+          <ion-col>
+            <div>
+              <p><strong>3PM</strong></p>
+            </div>
+          </ion-col>
+          <ng-container *ngFor="let item of freeTimming; let i = index">
+            <ion-col>
+              <div *ngIf="freeTimming[i].timeSlot8=='0'" class="col_border"></div>
+              <div *ngIf="freeTimming[i].timeSlot8==1" class="col_border col_bg"></div>
+            </ion-col>
+          </ng-container>
+        </ion-row>
+
+        <ion-row align-items-center>
+          <ion-col>
+            <div>
+              <p><strong>4PM</strong></p>
+            </div>
+          </ion-col>
+          <ng-container *ngFor="let item of freeTimming; let i = index">
+            <ion-col>
+              <div *ngIf="freeTimming[i].timeSlot9=='0'" class="col_border"></div>
+              <div *ngIf="freeTimming[i].timeSlot9==1" class="col_border col_bg"></div>
+            </ion-col>
+          </ng-container>
+        </ion-row>
+
+        <ion-row align-items-center>
+          <ion-col>
+            <div>
+              <p><strong>5PM</strong></p>
+            </div>
+          </ion-col>
+          <ng-container *ngFor="let item of freeTimming; let i = index">
+            <ion-col>
+              <div *ngIf="freeTimming[i].timeSlot10=='0'" class="col_border"></div>
+              <div *ngIf="freeTimming[i].timeSlot10==1" class="col_border col_bg"></div>
+            </ion-col>
+          </ng-container>
+        </ion-row>
+
+        <ion-row align-items-center>
+          <ion-col>
+            <div>
+              <p><strong>6PM</strong></p>
+            </div>
+          </ion-col>
+          <ng-container *ngFor="let item of freeTimming; let i = index">
+            <ion-col>
+              <div *ngIf="freeTimming[i].timeSlot11=='0'" class="col_border"></div>
+              <div *ngIf="freeTimming[i].timeSlot11==1" class="col_border col_bg"></div>
+            </ion-col>
+          </ng-container>
+        </ion-row>
+
+        <ion-row align-items-center>
+          <ion-col>
+            <div>
+              <p><strong>7PM</strong></p>
+            </div>
+          </ion-col>
+          <ng-container *ngFor="let item of freeTimming; let i = index">
+            <ion-col>
+              <div *ngIf="freeTimming[i].timeSlot12=='0'" class="col_border"></div>
+              <div *ngIf="freeTimming[i].timeSlot12==1" class="col_border col_bg"></div>
+            </ion-col>
+          </ng-container>
+        </ion-row>
+
+        <ion-row align-items-center>
+          <ion-col>
+            <div>
+              <p><strong>8PM</strong></p>
+            </div>
+          </ion-col>
+          <ng-container *ngFor="let item of freeTimming; let i = index">
+            <ion-col>
+              <div *ngIf="freeTimming[i].timeSlot13=='0'" class="col_border"></div>
+              <div *ngIf="freeTimming[i].timeSlot13==1" class="col_border col_bg"></div>
+            </ion-col>
+          </ng-container>
+        </ion-row>
+
+      </ion-grid>
+    </div>
+
+  </div>
+</ion-content>
+<div class="custom-modal" [ngClass]="{'open': openModal}">
+  <div class="header">
+    <button ion-button clear color="dark" (click)="openModal = false">
+      <!-- <ion-icon name="arrow-back" (click)="back()"></ion-icon> -->
+    </button>
+    <div class="modal-title">Schedule Meeting</div>
+    <button ion-button clear color="dark" (click)="openModal = false">
+      <ion-icon name="close" (click)="close()"></ion-icon>
+    </button>
+  </div>
+  <div class="body-content">
+    <ion-row class="heading" align-items-center>
+      <ion-col>Time</ion-col>
+      <ion-col>{{date}}</ion-col>
+      <ion-col>{{time}}</ion-col>
+    </ion-row>
+    <button ion-button block class="location-btn" color="iconadd" (click)="onLocationClick()"
+      *ngIf="flag==0">Location</button>
+
+    <ng-container *ngIf="flag1==1">
+      <p><strong>Search a Restaurant</strong></p>
+      <ion-list no-lines inset>
+        <ion-item *ngFor="let item of restaurantData" (click)="onRestaurantClick(item)">
+          <ion-avatar item-start>
+            <img src="../assets/imgs/pizza.jpg">
+          </ion-avatar>
+          <h2>{{item.ResturantName}}</h2>
+          <p>{{item.StreetAddress}}</p>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+
+    <ng-container *ngIf="flag2==1">
+      <ion-list>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="../assets/imgs/pizza.jpg">
+          </ion-thumbnail>
+          <h2>{{restaurantName}}</h2>
+          <ion-note item-right>{{restautantAddress}}</ion-note>
+        </ion-item>
+      </ion-list>
+      <div text-center>
+        <button ion-button block color="primary" (click)="checkStatus()">CREATE</button>
+      </div>
+    </ng-container>
+  </div>
+</div>

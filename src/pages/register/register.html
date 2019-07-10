@@ -1,0 +1,43 @@
+  <ion-content>
+    <!-- <ion-grid class="loading">
+      <ion-row>
+        <ion-col>
+          
+  <lottie-animation-view [options]="lottieConfig"  [height]="400" (animCreated)="handleAnimation($event)">
+  </lottie-animation-view>
+        </ion-col>
+      </ion-row>
+    </ion-grid> -->
+    <div class="header">
+      <button ion-button clear icon-only color="dark" (click)="back()"><ion-icon name="arrow-back"></ion-icon></button>
+      <img src="../assets/imgs/logobuddy.png" class="user">
+    </div>
+    <ion-list no-lines>
+      <ion-item>
+        <ion-input placeholder="Name" [type]="text" [(ngModel)]="userName" (keyup)="getText($event)"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input placeholder="Email Id" [type]="text" [(ngModel)]="emailId"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input [type]="password_type" placeholder="Password" [(ngModel)]="password"></ion-input>
+         <button ion-button clear no-margin (click)="togglePasswordMode()" item-right color="light">
+          <ion-icon name="eye-off" *ngIf="password_type=='password'"></ion-icon>
+          <ion-icon name="eye" *ngIf="password_type=='text'"></ion-icon>
+        </button>
+      </ion-item>
+      <ion-item>
+        <ion-input [type]="password_type1" placeholder="Confirm Password" [(ngModel)]="confPassword"></ion-input>
+        <button ion-button clear no-margin (click)="togglePasswordMode1()" item-right color="light">
+          <ion-icon name="eye-off" *ngIf="password_type1=='password'"></ion-icon>
+          <ion-icon name="eye" *ngIf="password_type1=='text'"></ion-icon>
+        </button>
+      </ion-item>
+    </ion-list>
+  
+
+  <div text-center class="login">
+    <button ion-button round color="secondary" text-capitalize (click)="validateUser()">Validate user
+    </button>
+  </div>
+</ion-content>

@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Near By Restaurant</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <div class="header">
+      <h4>Within radius of 1 km</h4>
+      <div class="restaurant-wrapper">
+        <ion-list no-lines>
+          <ng-container *ngFor="let item of restaurantData">
+            <ion-item [ngClass]="{'active': restaurantId == item.ResturantId}" (click)="onFoodTypeChange(item.ResturantId)">
+              <ion-avatar item-start>
+                <ion-icon ios="ios-cafe" md="md-cafe"></ion-icon>
+              </ion-avatar>
+              <h4><strong>{{item.ResturantName}}</strong></h4>
+              <p>{{item.StreetAddress}}</p>
+            </ion-item>
+          </ng-container>
+        </ion-list>
+      </div>
+    </div>
+
+    <div padding class="food_sec">
+      <h4>Choose the food type</h4>
+      <ion-row nowrap>
+        <ion-col col-4 *ngFor="let item of foodCuisine">
+          <div class="img-wrapper" text-left>
+            <img src="{{imgUrl + item.ImageUrl}}" alt="" onerror="this.src='./assets/imgs/photo-camera.png'" />
+            <p>{{item.FoodPreferences}}</p>
+            <!-- <button ion-button small>
+              <ion-icon name="checkmark" color="dark"></ion-icon>
+            </button> -->
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div padding-horizontal class="rest_sec">
+      <h4>Nearby Restaurants</h4>
+      <ion-row nowrap>
+        <ion-col col-12 *ngFor="let item of restaurantData">
+          <div class="nearby-wrapper" text-left>
+            <img src="../assets/imgs/pizza.jpg" />
+            <h4>{{item.ResturantName}}</h4>
+            <p>View the five minute food menu</p>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+</ion-content>

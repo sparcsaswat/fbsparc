@@ -1,0 +1,27 @@
+page-friends-calender {
+    ion-content {
+        ion-grid {
+            padding:8px!important;
+            ion-row {
+                ion-col {
+                    p {
+                        font-size:1.3rem!important;
+                        strong {
+                            font-size:1.2rem!important;
+                        }
+                    }
+                    .col_border {
+                        border: 1px solid #999 !important;
+                        width: 100%;
+                        height: 30px;
+                   
+                    }
+                    .col_bg {
+                        background:map-get($colors, toggle)!important;
+                    } 
+                   
+                }
+            }
+        }
+    }
+}

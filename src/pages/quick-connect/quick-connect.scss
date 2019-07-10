@@ -1,0 +1,77 @@
+page-quick-connect {
+    ion-header {
+        ion-navbar {
+            ion-title {
+                padding-right: 10px!important;
+                p{
+                    font-size: 1.8rem!important;
+                    color: #ddd;
+                }
+            }
+        }
+    }
+    ion-content {
+        background: #E8EAF2!important;
+        ion-card {
+            border-radius:8px!important;
+            ion-list {            
+                ion-item {
+                background: none!important;
+                img {
+                    width: 60px!important;
+                    height: 60px!important;
+                } 
+                h2 {
+                    color:map-get($colors, primary)!important;
+                    font-weight: bold!important;
+                }
+                button {
+                    padding: 0px 0.9em!important;
+                }
+                
+                }
+            }
+            .interest_sec {
+                h4 {
+                    font-size: 1.6rem!important;
+                    color:map-get($colors, primary)!important;
+                }
+                .interested-items {
+                    display: flex;
+                    max-width: 100%;
+                    overflow: auto;
+                    padding-top: 5px;
+                    .interest_column {
+                        background: #91A3EE;
+                        display: inline-block;
+                        padding: 8px 33px 8px 25px;
+                        border-radius: 19px;
+                        font-weight: bold;
+                        position: relative;
+                        margin: 0px 5px 5px 0px;
+                        color: #fff;
+                        white-space: nowrap;
+                    }
+                }
+            }
+        }
+    .blue_bg {
+        background:map-get($colors, primary)!important;
+        ion-item {
+            h2 {
+                color:map-get($colors, light)!important; 
+            }
+        }
+        .interest_sec { 
+            h4 {
+                color:map-get($colors, light)!important;
+            } 
+            .interest_column {
+                background: #fff;
+                color:map-get($colors, primary)!important;
+            }
+        }
+    }
+    }
+
+}

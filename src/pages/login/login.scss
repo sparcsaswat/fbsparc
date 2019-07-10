@@ -1,0 +1,96 @@
+page-login {
+    ion-content {
+        background-color: #2133A0!important;
+
+        
+            ion-list {
+                margin-top:30px!important;
+                padding:16px!important;
+                padding-top: 0px!important;
+                ion-item {
+                    border-bottom: 2px solid #4D5CB3!important;
+                    padding-left: 0px !important;
+                    align-items: flex-end!important;
+                    background:transparent!important;
+                    box-shadow: none!important;
+                    // &:last-child{
+                    //     box-shadow: none!important;
+                    // }
+                    .item-inner {
+                        margin-left:0px!important;
+                    }
+                    ion-icon {
+                        font-size:2.2rem!important;
+                        margin-bottom: 0px!important;
+                    }
+                    ion-label {
+                        margin-top: -7px!important;
+                        color: #fff;
+                    }
+                    ion-input {
+                        ::placeholder {
+                            font-size: 15px; 
+                            color: rgb(255, 231, 231)!important;
+                          
+                        }
+                        .text-input {
+                            padding:0px!important;
+                            color:#fff!important;
+                            margin: 6px 8px!important;
+                         }
+                    }
+                    button {
+                        margin-bottom:3px!important;
+                    }
+                }
+            }
+            .header {
+                color: #fff;
+                position: relative;
+                text-align: center;
+                padding: 81px 0px 25px;
+                font-size: 1.2em;
+                position: relative;
+                z-index: 9;
+                //height: 210px;
+                //min-height: 110px;
+                img {
+                    //margin-top: 20px;
+                    position: relative;
+                    z-index: 9;
+                    width: 7em;
+                    height:7em;
+                }
+                &:before {
+                    content: "";
+                    position: absolute;
+                    background: #fff;
+                    height: 250%;
+                    width: 182%;
+                    z-index: 0;
+                    border-radius: 73%;
+                    -webkit-box-shadow: 0px 1px 7px #fff;
+                    box-shadow: 0px 1px 7px #fff;
+                    top: -150%;
+                    left: -40%;
+                    right: 0px;
+                }
+            }
+        
+        p {
+            color: #fff!important;
+            margin-bottom:0px!important;
+            //text-decoration: underline;
+        }
+        .login {
+            .button {
+                padding: 0 3.7rem!important;
+            }
+        }
+        .signup {
+            .button {
+                padding: 0 3.4rem!important;     
+            }
+        }
+    }
+}

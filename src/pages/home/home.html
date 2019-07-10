@@ -1,0 +1,68 @@
+<!-- <ion-header>
+    <ion-buttons right>
+      <button ion-button clear color="primary" (click)="logOut()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+</ion-header> -->
+
+<ion-content no-bounce>
+  <!-- <ion-row class="header-btns">
+      <ion-col text-right>
+          <button ion-button icon-only clear color="primary" (click)="logOut()">
+              <ion-icon name="log-out"></ion-icon>
+          </button>
+      </ion-col>
+  </ion-row> -->
+  <div class="user-info">
+    <div class="logo-circle"><img src="./assets/imgs/logobuddy.png" alt=""></div>
+    <p>Hey {{userName}}</p>
+    <p>What would you like to do today?</p>
+  </div>
+  <div class="action-btns">
+    <div class="img_border" (click)="meetPeople()">
+      <div text-right class="img_sec">
+        <ion-icon ios="ios-people" md="md-people" color="primary"></ion-icon>
+      </div>Meet People
+    </div>
+    <div class="img_border" (click)="findRastaurants()">
+      <div text-right class="img_sec">
+        <ion-icon name="md-restaurant" color="primary"></ion-icon>
+      </div>Find Restaurants
+    </div>
+    <div class="img_border" (click)="connect()">
+      <div text-right class="img_sec">
+        <ion-icon name="chatbubbles" color="primary"></ion-icon>
+      </div>Connect
+    </div>
+  </div>
+</ion-content>
+<!-- <ion-footer>
+  <ion-row align-items-center>
+    <ion-col>
+      <button ion-button small clear color="primary" (click)="explore()">
+        <ion-icon ios="ios-locate" md="md-locate"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col>
+      <button ion-button small clear color="primary" (click)="notification()">
+        <ion-icon ios="ios-notifications" md="md-notifications"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col>
+      <button ion-button color="primary" class="fab_btn" (click)="FriendsProfile()">
+        <ion-icon ios="ios-add" md="md-add"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col>
+      <button ion-button small clear color="primary" (click)="Chatlist()">
+        <ion-icon name="ios-chatbubbles"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col>
+      <button ion-button small clear color="primary" (click)="profile()">
+        <ion-icon name="person"></ion-icon>
+      </button>
+    </ion-col>
+  </ion-row>
+</ion-footer> -->

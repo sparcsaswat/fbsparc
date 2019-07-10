@@ -1,0 +1,90 @@
+page-register {
+    ion-content {
+        background-color: #2133A0!important;
+        .loading {
+            height: 100%;
+            justify-content: center;
+        }
+        ion-list {
+            margin-top:30px!important;
+            padding:25px!important;
+            padding-top: 0px!important;
+            ion-item {
+                border-bottom: 2px solid #4D5CB3!important;
+                padding-left: 0px !important;
+                align-items: flex-end!important;
+                background:transparent!important;
+                box-shadow: none!important;
+                ion-input {
+                    color:#fff!important;
+                    ::placeholder {
+                        font-size: 15px; 
+                        color: rgb(255, 231, 231)!important;
+                    }                    
+                    .text-input-md {
+                        padding:0px!important;
+                            color:#fff!important;
+                            margin: 6px 8px!important;
+                         }
+                    }
+                    button {
+                        margin-bottom:3px!important;
+                    }
+                }
+            }
+            .header {
+                color: #fff;
+                position: relative;
+                text-align: center;
+                padding: 81px 0px 25px;
+                font-size: 1.2em;
+                position: relative;
+                z-index: 9;
+                //height: 210px;
+                //min-height: 110px;
+                button {
+                    position: absolute;
+                    left: 10px;
+                    top: 10px;
+                    z-index: 9;
+                }
+                img {
+                    //margin-top: 20px;
+                    position: relative;
+                    z-index: 9;
+                    width: 7em;
+                    height:7em;
+                }
+                &:before {
+                    content: "";
+                    position: absolute;
+                    background: #fff;
+                    height: 250%;
+                    width: 182%;
+                    z-index: 0;
+                    border-radius: 73%;
+                    -webkit-box-shadow: 0px 1px 7px #fff;
+                    box-shadow: 0px 1px 7px #fff;
+                    top: -150%;
+                    left: -40%;
+                    right: 0px;
+                }
+            }
+        
+        p {
+            color:#fff;
+            //text-decoration: underline;
+        }
+        .login {
+            .button {
+                padding: 0 3.7rem!important;
+            }
+        }
+        .signup {
+            .button {
+                padding: 0 3.4rem!important;     
+            }
+        }
+    }
+
+}
